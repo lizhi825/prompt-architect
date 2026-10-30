@@ -1,0 +1,66 @@
+{
+  "name": "prompt-architect",
+  "version": "1.0.1",
+  "private": true,
+  "description": "提示词架构师 - 悬浮窗式需求澄清与完备提示词生成器",
+  "main": "main.js",
+  "license": "MIT",
+  "author": "lizhi825",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lizhi825/prompt-architect.git"
+  },
+  "homepage": "https://github.com/lizhi825/prompt-architect#readme",
+  "bugs": {
+    "url": "https://github.com/lizhi825/prompt-architect/issues"
+  },
+  "keywords": [
+    "prompt-engineering",
+    "deepseek",
+    "electron",
+    "floating-window",
+    "speech-to-text",
+    "llm-agent"
+  ],
+  "scripts": {
+    "start": "node launch.js",
+    "dev": "node launch.js --dev",
+    "dist": "electron-builder --win --x64",
+    "sync:prompt": "node -e \"const fs=require('fs');const s='../提示词架构师_SystemPrompt_v1.0.md';if(!fs.existsSync(s)){console.log('上级目录未找到源提示词，跳过（仓库自带 system-prompt.source.md 即可运行）');process.exit(0)}fs.copyFileSync(s,'system-prompt.source.md');console.log('已同步 system-prompt.source.md')\""
+  },
+  "build": {
+    "appId": "cn.workbuddy.promptarchitect",
+    "productName": "PromptArchitect",
+    "copyright": "Copyright 2026",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "launch.js",
+      "system-prompt.js",
+      "system-prompt.source.md",
+      "renderer/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": ["nsis"],
+      "icon": "build/icon.ico",
+      "artifactName": "PromptArchitect-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "提示词架构师"
+    }
+  },
+  "devDependencies": {
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8"
+  }
+}
